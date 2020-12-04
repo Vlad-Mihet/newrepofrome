@@ -21,16 +21,13 @@ const UserSchema = new Schema({
   },
   provider: {
     type: String,
-    required: true,
     default: 'email'
   },
   googleId: {
     type: String,
-    unique: true
   },
   facebookId: {
     type: String,
-    unique: true
   },
   avatar: {
     type: String

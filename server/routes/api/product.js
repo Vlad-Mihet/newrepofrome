@@ -106,7 +106,6 @@ router.post(
         imageUrl,
         imageKey
       });
-      console.log('product ',product);
 
       const savedProduct = await product.save();
 
@@ -146,7 +145,6 @@ router.get('/item/:slug', (req, res) => {
           message: 'No product found.'
         });
       }
-      console.log('data ',data);
 
       res.status(200).json({
         product: data
@@ -164,7 +162,6 @@ router.get('/list', (req, res) => {
           error: 'Your request could not be processed. Please try again.'+err.message
         });
       }
-      console.log('response  ',data);
 
       res.status(200).json({
         products: data

@@ -101,11 +101,11 @@ router.post('/register', (req, res) => {
 
     let subscribed = false;
     if (isSubscribed) {
-      const result = await mailchimp.subscribeToNewsletter(email);
+      // const result = await mailchimp.subscribeToNewsletter(email);
 
-      if (result.status === 'subscribed') {
-        subscribed = true;
-      }
+      // if (result.status === 'subscribed') {
+      //   subscribed = true;
+      // }
     }
 
     const user = new User({
@@ -119,7 +119,7 @@ router.post('/register', (req, res) => {
       bcrypt.hash(user.password, salt, (err, hash) => {
         if (err) {
           return res.status(400).json({
-            error: 'Your request could not be processed. Please try again.'
+            error: 'Your request could not be processed. Please try again.'+err.message
           });
         }
 
@@ -128,7 +128,7 @@ router.post('/register', (req, res) => {
         user.save(async (err, user) => {
           if (err) {
             return res.status(400).json({
-              error: 'Your request could not be processed. Please try again.'
+              error: 'Your request could not be processed. Please try again.'+err.message
             });
           }
 
@@ -136,7 +136,7 @@ router.post('/register', (req, res) => {
             id: user.id
           };
 
-          await mailgun.sendEmail(user.email, 'signup', null, user.profile);
+          // await mailgun.sendEmail(user.email, 'signup', null, user.profile);
 
           jwt.sign(payload, secret, { expiresIn: tokenLife }, (err, token) => {
             res.status(200).json({
@@ -169,7 +169,7 @@ router.post('/forgot', (req, res) => {
     if (err || existingUser === null) {
       return res.status(400).json({
         error:
-          'Your request could not be processed as entered. Please try again.'
+          'Your request could not be processed as entered. Please try again.'+err.message
       });
     }
 
@@ -177,7 +177,7 @@ router.post('/forgot', (req, res) => {
       const resetToken = buffer.toString('hex');
       if (err) {
         return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
+          error: 'Your request could not be processed. Please try again.'+err.message
         });
       }
 
@@ -187,7 +187,7 @@ router.post('/forgot', (req, res) => {
       existingUser.save(async err => {
         if (err) {
           return res.status(400).json({
-            error: 'Your request could not be processed. Please try again.'
+            error: 'Your request could not be processed. Please try again.'+err.message
           });
         }
 
@@ -201,7 +201,7 @@ router.post('/forgot', (req, res) => {
         res.status(200).json({
           success: true,
           message:
-            'Please check your email for the link to reset your password.'
+            'Please check your email for the link to reset your password.'+err.message
         });
       });
     });
@@ -224,7 +224,7 @@ router.post('/reset/:token', (req, res) => {
       if (!resetUser) {
         return res.status(400).json({
           error:
-            'Your token has expired. Please attempt to reset your password again.'
+            'Your token has expired. Please attempt to reset your password again.'+err.message
         });
       }
       bcrypt.genSalt(10, (err, salt) => {
@@ -232,7 +232,7 @@ router.post('/reset/:token', (req, res) => {
           if (err) {
             return res.status(400).json({
               error:
-                'Your request could not be processed as entered. Please try again.'
+                'Your request could not be processed as entered. Please try again.'+err.message
             });
           }
           req.body.password = hash;
@@ -245,7 +245,7 @@ router.post('/reset/:token', (req, res) => {
             if (err) {
               return res.status(400).json({
                 error:
-                  'Your request could not be processed as entered. Please try again.'
+                  'Your request could not be processed as entered. Please try again.'+err.message
               });
             }
 
@@ -254,7 +254,7 @@ router.post('/reset/:token', (req, res) => {
             res.status(200).json({
               success: true,
               message:
-                'Password changed successfully. Please login with your new password.'
+                'Password changed successfully. Please login with your new password.'+err.message
             });
           });
         });
