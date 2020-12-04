@@ -19,7 +19,7 @@ router.post(
   role.checkRole(role.ROLES.Admin),
   upload.single('image'),
   async (req, res) => {
-    try {
+    // try {
       const sku = req.body.sku;
       const name = req.body.name;
       const description = req.body.description;
@@ -57,11 +57,13 @@ router.post(
       let imageKey = '';
 
       if (image) {
+        
         const s3bucket = new AWS.S3({
           accessKeyId: process.env.AWS_ACCESS_KEY_ID,
           secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
           region: process.env.AWS_REGION
         });
+
 
         const params = {
           Bucket: process.env.AWS_BUCKET_NAME,
@@ -88,6 +90,7 @@ router.post(
         imageUrl,
         imageKey
       });
+      console.log('product ',product);
 
       const savedProduct = await product.save();
 
@@ -96,11 +99,11 @@ router.post(
         message: `Product has been added successfully!`,
         product: savedProduct
       });
-    } catch (error) {
-      return res.status(400).json({
-        error: 'Your request could not be processed. Please try again.'
-      });
-    }
+    // } catch (error) {
+    //   return res.status(400).json({
+    //     error: 'Your request could not be processed. Please try again.'
+    //   });
+    // }
   }
 );
 
