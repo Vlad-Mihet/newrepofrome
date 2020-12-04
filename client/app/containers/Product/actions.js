@@ -59,6 +59,13 @@ export const fetchProducts = (filter, slug) => {
 
     try {
       const response = await axios.get(`/api/product/list`);
+      console.log('response.data.products ',response.data.products);
+   
+      
+  
+
+      
+
       dispatch({
         type: FETCH_PRODUCTS,
         payload: response.data.products

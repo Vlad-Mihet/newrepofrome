@@ -26,6 +26,9 @@ const ProductSchema = new Schema({
   imageKey: {
     type: String
   },
+  imageUrl:{
+    type:String
+  },
   description: {
     type: String,
     trim: true
@@ -51,5 +54,21 @@ const ProductSchema = new Schema({
     default: Date.now
   }
 });
+
+
+
+
+
+
+
+// ProductSchema.post('init', async function (doc) {
+//   // Transform doc as needed here.  "this" is also the doc.
+//   const docToUpdate = await this.findOne();
+//   console.log('docToUpdate ',docToUpdate);
+//   // doc();
+// })
+
+
+
 
 module.exports = Mongoose.model('Product', ProductSchema);

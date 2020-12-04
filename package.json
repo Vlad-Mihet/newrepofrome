@@ -69,9 +69,7 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "simple-line-icons": "^2.4.1",
-    "validatorjs": "^3.18.1"
-  },
-  "devDependencies": {
+    "validatorjs": "^3.18.1",
     "@babel/core": "^7.4.5",
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",

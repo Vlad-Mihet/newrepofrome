@@ -13,13 +13,22 @@ const role = require('../../middleware/role');
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+
+    const s3bucket = new AWS.S3({
+          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+          region: process.env.AWS_REGION
+        });
+
+
+
 router.post(
   '/add',
   auth,
   role.checkRole(role.ROLES.Admin),
   upload.single('image'),
   async (req, res) => {
-    // try {
+    try {
       const sku = req.body.sku;
       const name = req.body.name;
       const description = req.body.description;
@@ -58,13 +67,6 @@ router.post(
 
       if (image) {
         
-        const s3bucket = new AWS.S3({
-          accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-          secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-          region: process.env.AWS_REGION
-        });
-
-
         const params = {
           Bucket: process.env.AWS_BUCKET_NAME,
           Key: image.originalname,
@@ -78,6 +80,20 @@ router.post(
         imageUrl = s3Upload.Location;
         imageKey = s3Upload.key;
       }
+
+
+      // const data =  await s3bucket.getObject(
+      //   {
+      //     Bucket: process.env.AWS_BUCKET_NAME,
+      //       Key: key
+      //     }
+        
+      // ).promise();
+      
+      // let buf = Buffer.from(data.Body);
+      // let base64 = buf.toString('base64');
+      // // console.log('data ',base64);
+
 
       const product = new Product({
         sku,
@@ -99,13 +115,18 @@ router.post(
         message: `Product has been added successfully!`,
         product: savedProduct
       });
-    // } catch (error) {
-    //   return res.status(400).json({
-    //     error: 'Your request could not be processed. Please try again.'
-    //   });
-    // }
+    } catch (error) {
+      return res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+    }
   }
 );
+
+
+
+
+
 
 // fetch product api
 router.get('/item/:slug', (req, res) => {
@@ -140,9 +161,11 @@ router.get('/list', (req, res) => {
     .exec((err, data) => {
       if (err) {
         return res.status(400).json({
-          error: 'Your request could not be processed. Please try again.'
+          error: 'Your request could not be processed. Please try again.'+err.message
         });
       }
+      console.log('response  ',data);
+
       res.status(200).json({
         products: data
       });
