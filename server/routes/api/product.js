@@ -125,6 +125,7 @@ router.get('/item/:slug', (req, res) => {
           message: 'No product found.'
         });
       }
+      console.log('data ',data);
 
       res.status(200).json({
         product: data
