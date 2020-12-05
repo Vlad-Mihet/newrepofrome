@@ -12,9 +12,6 @@ import { Link } from 'react-router-dom';
 
 const ProductList = props => {
   const { products } = props;
-
-
-
   return (
     <div className='product-list'>
       <Row className='flex-row'>

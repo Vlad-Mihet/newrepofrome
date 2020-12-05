@@ -22,6 +22,18 @@ const upload = multer({ storage });
 
 
 
+        // router.post('/addreview',(req,res)=>{
+
+        //   const _id = req.body.id;
+        //   Product.findByIdAndUpdate(id,{
+        //     reviwes:
+        //   })
+
+
+
+        // })
+
+
 router.post(
   '/add',
   auth,
@@ -82,17 +94,7 @@ router.post(
       }
 
 
-      // const data =  await s3bucket.getObject(
-      //   {
-      //     Bucket: process.env.AWS_BUCKET_NAME,
-      //       Key: key
-      //     }
-        
-      // ).promise();
-      
-      // let buf = Buffer.from(data.Body);
-      // let base64 = buf.toString('base64');
-      // // console.log('data ',base64);
+    
 
 
       const product = new Product({

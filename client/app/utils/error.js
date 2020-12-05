@@ -1,8 +1,3 @@
-/**
- *
- * error.js
- * This is a generic error handler, it receives the error returned from the server and present it on a pop up
- */
 
 import { error } from 'react-notification-system-redux';
 

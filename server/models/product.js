@@ -10,6 +10,21 @@ const options = {
 
 Mongoose.plugin(slug, options);
 
+
+const reviewSchema = Mongoose.Schema(
+  {
+    rating: { type: Number, },
+    comment: { type: String, },
+    user: {
+      type: Mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  },
+  {
+    timestamps: true,
+  }
+)
+
 // Product Schema
 const ProductSchema = new Schema({
   sku: {
@@ -43,6 +58,13 @@ const ProductSchema = new Schema({
     type: Boolean,
     default: false
   },
+
+  reviews: [reviewSchema],
+
+  comments:{
+    type:[String]
+  },
+
   brand: {
     type: Schema.Types.ObjectId,
     ref: 'Brand',

@@ -1,8 +1,4 @@
-/*
- *
- * OrderSuccess
- *
- */
+
 
 import React from 'react';
 import { connect } from 'react-redux';
@@ -13,6 +9,7 @@ import actions from '../../actions';
 
 import NotFound from '../../components/NotFound';
 import LoadingIndicator from '../../components/LoadingIndicator';
+
 
 class OrderSuccess extends React.PureComponent {
   componentDidMount() {
@@ -42,6 +39,8 @@ class OrderSuccess extends React.PureComponent {
               complete.
             </p>
             <p>A confirmation email will be sent to you shortly.</p>
+            
+           
             <div className='order-success-actions'>
               <Link to='/dashboard/orders' className='btn-link'>
                 Manage Orders
@@ -49,6 +48,7 @@ class OrderSuccess extends React.PureComponent {
               <Link to='/shop' className='btn-link shopping-btn'>
                 Continue Shopping
               </Link>
+            
             </div>
           </div>
         ) : (
